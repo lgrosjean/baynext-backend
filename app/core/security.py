@@ -3,7 +3,7 @@ from typing import Annotated
 from fastapi import HTTPException, Security, status
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 
-from app.settings import settings
+from app.core.settings import settings
 
 
 async def check_token(

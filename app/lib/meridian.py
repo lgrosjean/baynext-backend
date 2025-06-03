@@ -3,7 +3,10 @@ from meridian.data.input_data import InputData
 from meridian.data.load import CoordToColumns, CsvDataLoader
 from meridian.model import model, prior_distribution, spec
 
-from . import constants
+from app.core.logging import get_logger
+from app.utils import constants
+
+logger = get_logger(__name__)
 
 MEDIA_TO_CHANNEL = {
     "Channel0_impression": "Channel_0",
@@ -29,11 +32,11 @@ def load(
     controls: list[str],
     geo: str,
     population: str,
-    revenue_per_kpi: str,
-    media: list[str],
-    media_spend: list[str],
-    organic_media: list[str],
-    non_media_treatments: list[str],
+    revenue_per_kpi: str = None,
+    media: list[str] = None,
+    media_spend: list[str] = None,
+    organic_media: list[str] = None,
+    non_media_treatments: list[str] = None,
     media_to_channel: dict[str, str] = MEDIA_TO_CHANNEL,
     media_spend_to_channel: dict[str, str] = MEDIA_SPEND_TO_CHANNEL,
 ):
@@ -50,6 +53,17 @@ def load(
         non_media_treatments=non_media_treatments,
     )
 
+    logger.info("Time: %s", time)
+    logger.info("KPI: %s", kpi)
+    logger.info("Controls: %s", controls)
+    logger.info("Geo: %s", geo)
+    logger.info("Population: %s", population)
+    logger.info("Revenue per KPI: %s", revenue_per_kpi)
+    logger.info("Media: %s", media)
+    logger.info("Media Spend: %s", media_spend)
+    logger.info("Organic Media: %s", organic_media)
+    logger.info("Non-media Treatments: %s", non_media_treatments)
+
     loader = CsvDataLoader(
         csv_path=csv_path,
         kpi_type=kpi_type,
@@ -57,6 +71,11 @@ def load(
         media_to_channel=media_to_channel,
         media_spend_to_channel=media_spend_to_channel,
     )
+
+    logger.info("KPI Type: %s", kpi_type)
+    logger.info("Media to Channel: %s", media_to_channel)
+    logger.info("Media Spend to Channel: %s", media_spend_to_channel)
+
     return loader.load()
 
 

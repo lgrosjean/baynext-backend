@@ -5,9 +5,22 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
+    "alembic>=1.15.2",
     "fastapi[standard]>=0.115.12",
     "google-meridian>=1.0.8",
+    "psycopg2-binary>=2.9.10",
     "pydantic-settings>=2.9.0",
     "python-multipart>=0.0.20",
     "requests>=2.32.3",
+    "sqlmodel>=0.0.24",
 ]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.3.5",
+    "pytest-asyncio>=0.26.0",
+    "pytest-cov>=6.1.1",
+]
+
+[tool.pytest.ini_options]
+asyncio_default_fixture_loop_scope = "session"
